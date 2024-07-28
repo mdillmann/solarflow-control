@@ -2,6 +2,7 @@ import random, time, logging, sys, getopt, os
 from datetime import datetime, timedelta
 from functools import reduce
 from paho.mqtt import client as mqtt_client
+import signal
 from astral import LocationInfo
 from astral.sun import sun
 import requests
@@ -440,6 +441,7 @@ def deviceInfo(client:mqtt_client):
 
 
 def run():
+    global client
     client = connect_mqtt()
     hub_opts = getOpts(Solarflow)
     hub = Solarflow(client=client,callback=limit_callback,**hub_opts)
@@ -459,6 +461,16 @@ def run():
 
     #client.loop_start()
     client.loop_forever()
+
+def graceful_shutdown():
+    log.info("Gracefull shutdown after signal")
+    client.disconnect()
+    client.loop_stop()
+    sys.exit()
+
+# catch signal
+def signal_handler(signum, frame):
+    graceful_shutdown()
 
 def main(argv):
     global mqtt_host, mqtt_port, mqtt_user, mqtt_pwd
@@ -523,4 +535,8 @@ def main(argv):
     run()
 
 if __name__ == '__main__':
+    # setup signal handlers
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+
     main(sys.argv[1:])
