@@ -44,7 +44,7 @@ class Solarflow:
         self.batteriesSoC = {"none":-1}    # state of charge for individual batteries
         self.batteriesVol = {"none":-1}    # voltage for individual batteries
         self.outputLimit = -1           # power limit for home output
-        self.inverseMaxPower = 300      # maximum power sent to inverter from hub (read and updated from hub)
+        self.inverseMaxPower = 800      # maximum power sent to inverter from hub (read and updated from hub)
         self.outputLimitBuffer = TimewindowBuffer(minutes=1)
         self.lastFullTS = None          # keep track of last time the battery pack was full (100%)
         self.lastEmptyTS = None         # keep track of last time the battery pack was empty (0%)
