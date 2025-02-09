@@ -1,5 +1,5 @@
 FROM python:3.11-alpine
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /solarflow/
 COPY ./requirements.txt /solarflow/requirements.txt
