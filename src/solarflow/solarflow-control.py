@@ -659,7 +659,7 @@ def main(argv):
 
 if __name__ == '__main__':
     # setup signal handlers
-    signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGTERM, signal_handler)
+    #signal.signal(signal.SIGINT, signal_handler)
+    #signal.signal(signal.SIGTERM, signal_handler)
 
     main(sys.argv[1:])
